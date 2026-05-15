@@ -1,0 +1,235 @@
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import nodemailer from "nodemailer";
+import crypto from "crypto";
+import dotenv from "dotenv";
+import dns from "dns";
+
+dotenv.config();
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+//added to make database work
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
+const conStr =
+  "mongodb+srv://admin:admin123@hct-cluster.czj4w6k.mongodb.net/HCSDB?retryWrites=true&w=majority&appName=HCT-Cluster";
+
+mongoose
+  .connect(conStr)
+  .then(() => console.log("Database Connected..."))
+  .catch((error) => console.log("Database Error: " + error));
+
+const UserSchema = new mongoose.Schema({
+  username: String,
+  email: String,
+  phone: String,
+  password: String,
+
+  role: {
+    type: String,
+    default: "customer",
+  },
+
+  resetCode: String,
+  resetCodeExpiry: Date,
+});
+
+const UserModel = mongoose.model("USER", UserSchema, "USER");
+
+// Register API
+app.post("/register", async (req, res) => {
+  try {
+    const { username, email, phone, password } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    if (user) {
+      return res.send({ message: "User Exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new UserModel({
+      username,
+      email,
+      phone,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+
+    res.send({ message: "User Registered" });
+  } catch (error) {
+    res.send({ message: "Register Error: " + error });
+  }
+});
+
+
+// Register Center API
+app.post("/register-center", async (req, res) => {
+  try {
+    const { username, email, phone, password } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    if (user) {
+      return res.send({ message: "Center Exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newCenter = new UserModel({
+      username,
+      email,
+      phone,
+      password: hashedPassword,
+      role: "center",
+    });
+
+    await newCenter.save();
+
+    res.send({ message: "Center Registered" });
+  } catch (error) {
+    res.send({ message: "Center Register Error: " + error.message });
+  }
+});
+
+
+// Login API
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    // user login
+    if (!user) {
+      return res.send({
+        message: "Invalid Email",
+      });
+    }
+
+    // admin & center login
+    if (user.role === "admin" || user.role === "center") {
+
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        return res.send({
+          message: "Email or Password Invalid",
+        });
+      }
+
+      return res.send({
+        message: "success",
+        user: user,
+      });
+    }
+
+    // user login
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.send({
+        message: "Invalid Password",
+      });
+    }
+
+    res.send({
+      message: "success",
+      user: user,
+    });
+
+  } catch (error) {
+    res.send({
+      message: "Login Error: " + error.message,
+    });
+  }
+});
+
+// Forgot Password API
+app.post("/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return res.send({ message: "Email not found" });
+    }
+
+    // generate 6 digit code
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+    user.resetCode = code;
+    user.resetCodeExpiry = Date.now() + 15 * 60 * 1000;
+
+    await user.save();
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Password Reset Code",
+      html: `
+        <h2>Password Reset</h2>
+        <p>Your verification code is:</p>
+        <h1>${code}</h1>
+        <p>This code expires in 15 minutes.</p>
+      `,
+    });
+
+    res.send({ message: "Reset code sent successfully" });
+
+  } catch (error) {
+    res.send({ message: "Email Error: " + error.message });
+  }
+});
+
+
+// Reset Password API
+app.post("/reset-password", async (req, res) => {
+  try {
+    const { email, code, password } = req.body;
+
+    const user = await UserModel.findOne({
+      email,
+      resetCode: code,
+      resetCodeExpiry: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.send({ message: "Invalid or expired code" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    user.password = hashedPassword;
+    user.resetCode = undefined;
+    user.resetCodeExpiry = undefined;
+
+    await user.save();
+
+    res.send({ message: "Password updated successfully" });
+  } catch (error) {
+    res.send({ message: "Reset Error: " + error.message });
+  }
+});
+
+
+app.listen(3002, () => {
+  console.log("Server Connected...");
+});

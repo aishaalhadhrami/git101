@@ -1,0 +1,326 @@
+
+.admin-page {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("/bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease;
+  overflow: hidden; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  background: rgba(200, 205, 190, 0.45);
+  display: flex;
+  flex-direction: column;
+}
+
+
+.topbar {
+  height: 70px;
+  background: rgba(227, 235, 227, 0.95);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+  flex-shrink: 0; 
+}
+
+.topbar-left, .topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-item {
+  margin: 0 15px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #3b3f2e;
+  transition: 0.3s;
+}
+
+.nav-item.active, .nav-item:hover {
+  color: #76a37b;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #3b3f2e;
+  display: flex;
+  align-items: center;
+}
+
+
+.layout {
+  display: flex;
+  flex: 1; 
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid rgba(0,0,0,0.1);
+  height: 100%;
+}
+
+.sidebar.open {
+  width: 260px;
+}
+
+.sidebar-content {
+  padding: 20px 10px;
+}
+
+.sidebar-item {
+  padding: 12px 20px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 10px;
+  color: #3b3f2e;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.sidebar-item.active {
+  background: #76a37b;
+  color: white;
+}
+
+.sidebar-item:hover:not(.active) {
+  background: rgba(118, 163, 123, 0.1);
+}
+
+.sidebar-logout {
+  padding: 20px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: #c0392b;
+}
+
+
+.content-wrapper {
+  flex: 1;
+  padding: 40px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 32px;
+  color: #2c3123;
+  margin-bottom: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  width: 180px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border: 1px solid #eee;
+  transition: 0.3s;
+}
+
+.clickable-card { cursor: pointer; }
+.clickable-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(118, 163, 123, 0.2);
+}
+
+.active-card {
+  border: 2px solid #76a37b !important;
+  background-color: #f9fff9;
+}
+
+.card-icon {
+  font-size: 40px;
+  color: #76a37b;
+  margin-bottom: 10px;
+}
+
+.card h3 { font-size: 28px; margin: 5px 0; color: #000; }
+.card p { color: #666; font-size: 14px; margin: 0; }
+
+
+.logo {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+.management-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #76a37b;
+  outline: none;
+}
+
+.remove-btn {
+  background: #c0392b;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.remove-btn:hover {
+  background: #a93226;
+  transform: scale(1.02);
+}
+
+
+.dashboard-record-box {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 35px;
+  animation: fadeIn 0.4s ease;
+}
+
+.records-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dashboard-record-card {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  border-left: 5px solid #76a37b;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+
+.admin-page.dark .overlay { background: rgba(15, 20, 15, 0.93); }
+.admin-page.dark .topbar { background: #111; color: white; }
+.admin-page.dark .nav-item, .admin-page.dark .icon-btn { color: white; }
+.admin-page.dark .sidebar { background: #1a1a1a; border-right-color: #333; }
+.admin-page.dark .sidebar-item { color: #ccc; }
+.admin-page.dark .card, 
+.admin-page.dark .management-card, 
+.admin-page.dark .dashboard-record-card { 
+  background: #222; 
+  border-color: #333; 
+  color: white; 
+}
+.admin-page.dark .title, .admin-page.dark .card h3 { color: white; }
+.admin-page.dark .input { background: #333; border-color: #444; color: white; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animation Keyframes */
+@keyframes cardClickPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1.05); }
+}
+
+@keyframes cardShake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+
+.clickable-card:active {
+  animation: cardClickPulse 0.2s ease-out;
+}
+
+
+.active-card {
+  border: 2px solid #76a37b !important;
+  background-color: #f9fff9;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(118, 163, 123, 0.3) !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+.admin-page.dark .active-card {
+  background-color: #1a2e1c !important; 
+  border-color: #76a37b !important;
+  box-shadow: 0 10px 25px rgba(118, 163, 123, 0.4) !important;
+}
+
+
+.dashboard-record-box {
+  animation: slideUpFade 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUpFade {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}

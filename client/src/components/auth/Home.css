@@ -1,0 +1,299 @@
+/* ===== Reset ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Main Wrapper ===== */
+.home-wrapper {
+  --bg-page: #f2f7f4;
+  --text-main: #2f3529;
+  --card-bg: #ffffff;
+  --nav-bg: #e7efe3;
+
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  min-height: 100vh;
+
+  font-family: Arial, sans-serif;
+}
+
+.home-wrapper.dark {
+  --bg-page: #1a1c18;
+  --text-main: #e2e3dd;
+  --card-bg: #232620;
+  --nav-bg: #1a1c18;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+/* ===== Navbar ===== */
+.navbar-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 16px 5%;
+
+  background: var(--nav-bg);
+
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.nav-logo-section span {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2f3529;
+
+  font-family: "Times New Roman", serif;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+
+  gap: 35px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #2f3529;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  font-family: "Times New Roman", serif;
+
+  transition: 0.3s;
+}
+
+.nav-menu a:hover {
+  color: #6d8b74;
+}
+
+.nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 100px;
+}
+
+.tool-icon {
+  cursor: pointer;
+  font-size: 1.4rem;
+
+  transition: 0.3s;
+}
+
+.tool-icon:hover {
+  transform: scale(1.1);
+}
+
+/* ===== Hero Section ===== */
+.hero-container {
+  width: 100%;
+  height: 350px;
+
+  background-image: url("/bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-bg-overlay {
+  width: 100%;
+  height: 100%;
+
+  background: rgba(233, 238, 220, 0.60);
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 0 20px;
+}
+
+.dark .hero-bg-overlay {
+  background: rgba(0, 0, 0, 0.50);
+}
+
+.hero-logo-img {
+  width: 120px;
+  margin-bottom: 15px;
+}
+
+.hero-text {
+  font-size: 24px;
+  font-weight: 700;
+
+  color: #2f3529;
+
+  max-width: 600px;
+
+  margin-bottom: 25px;
+}
+
+.dark .hero-text {
+  color: white;
+}
+
+/* ===== Search ===== */
+.hero-search-wrapper {
+  position: relative;
+
+  width: 100%;
+  max-width: 480px;
+}
+
+.hero-search-wrapper input {
+  width: 100%;
+  height: 45px;
+
+  border-radius: 30px;
+  border: none;
+
+  padding: 0 25px;
+
+  font-size: 15px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+  outline: none;
+}
+
+.search-glass {
+  position: absolute;
+
+  right: 20px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  cursor: pointer;
+}
+
+.rtl .search-glass {
+  right: auto;
+  left: 20px;
+}
+
+/* ===== Cards ===== */
+.cards-section {
+  padding: 40px 5%;
+}
+
+.section-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.cards-layout {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+
+  gap: 20px;
+}
+
+.center-card-item {
+  background: var(--card-bg);
+
+  border: 2px solid rgba(255,255,255,0.7);
+
+  border-radius: 12px;
+
+  padding: 15px;
+
+  text-align: center;
+
+  transition: transform 0.3s;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.center-card-item:hover {
+  transform: translateY(-5px);
+}
+
+.center-card-img {
+  height: 100px;
+
+  margin-bottom: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-card-img img {
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+}
+
+.center-card-name {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.center-card-stars {
+  color: #ffc107;
+  margin-bottom: 12px;
+}
+
+.center-card-btn {
+  background: #d4e4d9;
+
+  border: 1px solid #999;
+
+  padding: 6px 15px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.center-card-btn:hover {
+  background: #b7c9b2;
+}
+
+/* ===== Footer ===== */
+.footer-simple-box {
+  padding: 30px 5%;
+
+  border-top: 1px solid #0000000d;
+
+  font-size: 14px;
+}
+
+.social-icons-list {
+  display: flex;
+  gap: 15px;
+
+  margin-top: 15px;
+
+  font-size: 1.3rem;
+}
+
+.footer-mini-icon {
+  font-size: 14px;
+  margin-right: 6px;
+  color: #4a5d4e;
+}
+
+.footer-contact-link {
+  cursor: pointer;
+}

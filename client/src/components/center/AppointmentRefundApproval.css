@@ -1,0 +1,154 @@
+
+.requests-container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+  animation: slideUp 0.4s ease;
+}
+
+.refund-card {
+  background: white;
+  border: 2px solid #000;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.refund-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.patient-name {
+  font-weight: bold;
+  font-size: 20px;
+  color: #2c3123;
+  margin-bottom: 5px;
+}
+
+.service-name {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.price-text-highlight {
+  color: #76a37b;
+  font-weight: bold;
+}
+
+.refund-reason {
+  font-size: 13px;
+  color: #777;
+  font-style: italic;
+  background: #f9f9f9;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.approval-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.approve-btn, .reject-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  transition: 0.2s;
+  font-size: 14px;
+}
+
+.approve-btn {
+  background: #76a37b;
+  color: white;
+}
+
+.reject-btn {
+  background: #c0392b;
+  color: white;
+}
+
+.approve-btn:hover { background: #5d8561; }
+.reject-btn:hover { background: #a93226; }
+
+
+.center-page.dark .refund-card {
+  background: #262626;
+  border-color: #555;
+}
+
+.center-page.dark .patient-name { color: white; }
+.center-page.dark .service-name { color: #bbb; }
+.center-page.dark .refund-reason { background: #333; color: #999; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+@media (max-width: 600px) {
+  .refund-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .approval-actions {
+    width: 100%;
+  }
+  .approve-btn, .reject-btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+
+.sidebar-icon {
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+.sidebar-item.active .sidebar-icon {
+  transform: scale(1.3) rotate(-10deg);
+  color: #fff;
+}
+
+
+.sidebar-item:hover .sidebar-icon {
+  animation: iconWiggle 0.5s ease-in-out;
+}
+
+@keyframes iconWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  75% { transform: rotate(-15deg); }
+}
+
+
+.center-page {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.dark .sidebar-item.active {
+  background: #76a37b;
+  box-shadow: 0 4px 15px rgba(118, 163, 123, 0.4);
+}
